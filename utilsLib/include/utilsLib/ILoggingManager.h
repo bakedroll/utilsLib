@@ -37,8 +37,13 @@ public:
     return m_instance;
   }
 
+  virtual LoggingSeverity getLogLevelMinimumSeverity() const = 0;
   virtual void setLogLevelMinimumSeverity(LoggingSeverity severity) = 0;
-  virtual void logMessage(LoggingSeverity severity, const std::string& message) = 0;
+
+  virtual void logMessage(LoggingSeverity severity, const std::string& message,
+                          const std::string& file = "", const std::string& function = "",
+                          int line = 0) const = 0;
+
   virtual void addLoggingStrategy(const std::shared_ptr<ILoggingStrategy>& strategy) = 0;
 
 protected:

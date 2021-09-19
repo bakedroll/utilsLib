@@ -15,8 +15,13 @@ class LoggingManager : public ILoggingManager
 public:
   ~LoggingManager() override;
 
+  LoggingSeverity getLogLevelMinimumSeverity() const override;
   void setLogLevelMinimumSeverity(LoggingSeverity severity) override;
-  void logMessage(LoggingSeverity severity, const std::string& message) override;
+
+  void logMessage(LoggingSeverity severity, const std::string& message,
+                  const std::string& file, const std::string& function,
+                  int line = 0) const override;
+
   void addLoggingStrategy(const std::shared_ptr<ILoggingStrategy>& strategy) override;
 
 protected:
@@ -28,7 +33,7 @@ private:
   LoggingSeverity     m_minSeverity;
   LoggingStrategyList m_loggingStrategies;
 
-  std::mutex m_mutex;
+  mutable std::mutex m_mutex;
 
 };
 
