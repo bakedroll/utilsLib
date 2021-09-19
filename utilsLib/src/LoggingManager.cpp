@@ -1,6 +1,6 @@
 #include "utilsLib/LoggingManager.h"
+#include "utilsLib/Utils.h"
 
-#include <ctime>
 #include <chrono>
 #include <cassert>
 #include <filesystem>
@@ -34,19 +34,7 @@ std::string severityToString(LoggingSeverity severity)
 
 std::string formatCurrentDateTime(const std::string& format)
 {
-  using sc        = std::chrono::system_clock;
-  const auto time = sc::to_time_t(sc::now());
-
-  tm t;
-  if (localtime_s(&t, &time) == EDOM)
-  {
-    return "";
-  }
-
-  char buffer[128];
-  strftime(buffer, sizeof(buffer), format.c_str(), &t);
-
-  return buffer;
+  return formatTimePoint(std::chrono::system_clock::now(), format);
 }
 
 std::string getFilenameFromPath(const std::string& path)
@@ -82,7 +70,7 @@ void LoggingManager::logMessage(LoggingSeverity severity, const std::string& mes
     formatCurrentDateTime("%Y-%m-%d %H:%M:%S") + " " +
     severityToString(severity) + 
       ((severity >= LoggingSeverity::Warning)
-        ? " " + getFilenameFromPath(file) + ":" + function + ":" + std::to_string(line)
+        ? " at " + getFilenameFromPath(file) + ":" + function + ":" + std::to_string(line)
         : "") +
     "] " + message;
 

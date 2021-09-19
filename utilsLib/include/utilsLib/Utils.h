@@ -5,6 +5,8 @@
 
 #include <cassert>
 #include <type_traits>
+#include <ctime>
+#include <chrono>
 
 #define assert_return(cond, ...) if (!(cond)) { assert(false); return __VA_ARGS__; }
 #define assert_continue(cond) if (!(cond)) { assert(false); continue; }
@@ -26,6 +28,9 @@
 
 namespace utilsLib
 {
+
+std::string formatTimePoint(const std::chrono::system_clock::time_point& timePoint,
+                            const std::string& format);
 
 template <typename T>
 typename std::underlying_type<T>::type underlying(T t)
