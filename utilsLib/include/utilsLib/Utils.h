@@ -5,7 +5,6 @@
 
 #include <cassert>
 #include <type_traits>
-#include <ctime>
 #include <chrono>
 
 #define assert_return(cond, ...) if (!(cond)) { assert(false); return __VA_ARGS__; }

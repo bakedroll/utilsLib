@@ -1,5 +1,7 @@
 #include "utilsLib/Utils.h"
 
+#include <ctime>
+
 namespace utilsLib
 {
 

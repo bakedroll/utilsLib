@@ -16,7 +16,9 @@ FileLoggingStrategy::FileLoggingStrategy(const std::string& directory)
   const auto filename = formatTimePoint(std::chrono::system_clock::now(), "%Y-%m-%d_%H.%M.%S") + ".txt";
   path /= filename;
 
-  m_stream.open(path.string(), std::ofstream::out);
+  m_filename = path.string();
+
+  m_stream.open(m_filename, std::ofstream::out);
 }
 
 FileLoggingStrategy::~FileLoggingStrategy()
@@ -25,6 +27,11 @@ FileLoggingStrategy::~FileLoggingStrategy()
   {
     m_stream.close();
   }
+}
+
+std::string FileLoggingStrategy::getFilename() const
+{
+  return m_filename;
 }
 
 void FileLoggingStrategy::deliverMessage(LoggingSeverity severity, const std::string& message)
