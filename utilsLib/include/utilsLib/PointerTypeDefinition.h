@@ -13,10 +13,13 @@ template <typename TPtr>
 class PointerTypeDefinition final
 {
 public:
+  ~PointerTypeDefinition() = delete;
+
   PointerTypeDefinition() = delete;
   PointerTypeDefinition(const PointerTypeDefinition&) = delete;
   PointerTypeDefinition(PointerTypeDefinition&&) = delete;
   PointerTypeDefinition& operator=(const PointerTypeDefinition&) = delete;
+  PointerTypeDefinition& operator=(PointerTypeDefinition&&) = delete;
 
 };
 
@@ -30,9 +33,9 @@ public:
   using GenericWeakPtr = std::weak_ptr<void>;
 
   template<typename Type>
-  static std::function<std::shared_ptr<void>(Injector<std::shared_ptr<void>>&)> getNewInstanceFunc()
+  static std::function<GenericTypePtr(Injector<GenericTypePtr>&)> getNewInstanceFunc()
   {
-    return [](Injector<std::shared_ptr<void>>& injector)
+    return [](Injector<GenericTypePtr>& injector)
     {
       return std::make_shared<Type>(injector);
     };

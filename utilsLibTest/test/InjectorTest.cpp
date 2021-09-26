@@ -6,7 +6,7 @@
 #include <utilsLib/ILoggingManager.h>
 #include <utilsLib/LoggingManager.h>
 
-TEST(InjectionContainerTest, DependencyTree)
+TEST(InjectorTest, DependencyTree)
 {
   class A
   {
