@@ -25,6 +25,13 @@
 #define UTILS_LOG_ERROR(msg) UTILS_LOG(utilsLib::LoggingSeverity::Error, msg)
 #define UTILS_LOG_FATAL(msg) UTILS_LOG(utilsLib::LoggingSeverity::Fatal, msg)
 
+#define ENABLE_BITMASK_OPERATORS(EnumType)        \
+template<>                                        \
+struct utilsLib::EnableBitMaskOperators<EnumType> \
+{                                                 \
+    static const bool enable = true;              \
+};
+
 namespace utilsLib
 {
 
@@ -37,4 +44,34 @@ typename std::underlying_type<T>::type underlying(T t)
   return static_cast<typename std::underlying_type<T>::type>(std::forward<T>(t));
 }
 
+template<typename EnumType>
+struct EnableBitMaskOperators
+{
+  static const bool enable = false;
+};
+
+template<typename EnumType>
+bool bitmask_has(EnumType mask, EnumType value)
+{
+  return underlying<EnumType>(mask & value) > 0;
+}
+
+}
+
+template<typename EnumType>
+typename std::enable_if<utilsLib::EnableBitMaskOperators<EnumType>::enable, EnumType>::type
+operator |(EnumType lhs, EnumType rhs)
+{
+  return static_cast<EnumType>(
+    utilsLib::underlying<EnumType>(lhs) |
+    utilsLib::underlying<EnumType>(rhs));
+}
+
+template<typename EnumType>
+typename std::enable_if<utilsLib::EnableBitMaskOperators<EnumType>::enable, EnumType>::type
+operator &(EnumType lhs, EnumType rhs)
+{
+  return static_cast<EnumType>(
+    utilsLib::underlying<EnumType>(lhs) &
+    utilsLib::underlying<EnumType>(rhs));
 }
