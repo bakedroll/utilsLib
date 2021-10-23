@@ -56,6 +56,10 @@ bool bitmask_has(EnumType mask, EnumType value)
   return underlying<EnumType>(mask & value) > 0;
 }
 
+int rand32();
+int rand32Between(int min, int max);
+double randDouble32Between(double min, double max, double step);
+
 }
 
 template<typename EnumType>

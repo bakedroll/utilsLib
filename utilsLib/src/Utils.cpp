@@ -22,4 +22,21 @@ std::string formatTimePoint(const std::chrono::system_clock::time_point& timePoi
   return buffer;
 }
 
+int rand32()
+{
+  return (rand() << 16) + rand();
+}
+
+int rand32Between(int min, int max)
+{
+  const auto range = max - min;
+  return (rand32() % range) + min;
+}
+
+double randDouble32Between(double min, double max, double step)
+{
+  const auto range = static_cast<int>((max - min) / step);
+  return (static_cast<double>(rand32() % range) * step) + min;
+}
+
 }
