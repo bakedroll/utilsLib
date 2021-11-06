@@ -117,7 +117,7 @@ public:
       if (instances.size() > 1)
       {
         assertAndLogMoreThanOneImplementationsError(tid);
-        return PointerTypeDefinition<TPtr>::template TypePtr<Type>();
+        return typename PointerTypeDefinition<TPtr>::template TypePtr<Type>();
       }
 
       const auto it = instances.begin();
@@ -131,7 +131,7 @@ public:
       if (instances.size() > 1)
       {
         assertAndLogMoreThanOneImplementationsError(tid);
-        return PointerTypeDefinition<TPtr>::template TypePtr<Type>();
+        return typename PointerTypeDefinition<TPtr>::template TypePtr<Type>();
       }
 
       const auto it = instances.begin();
@@ -154,7 +154,7 @@ public:
     UTILS_LOG_ERROR(std::string("Type ") + tid.name() + " was not registered");
 
     assert(false);
-    return PointerTypeDefinition<TPtr>::template TypePtr<Type>();
+    return typename PointerTypeDefinition<TPtr>::template TypePtr<Type>();
   }
 
 private:

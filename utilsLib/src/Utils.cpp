@@ -10,14 +10,10 @@ std::string formatTimePoint(const std::chrono::system_clock::time_point& timePoi
 {
   const auto time = std::chrono::system_clock::to_time_t(timePoint);
 
-  tm t;
-  if (localtime_s(&t, &time) == EDOM)
-  {
-    return "";
-  }
+  auto t = std::localtime(&time);
 
   char buffer[128];
-  strftime(buffer, sizeof(buffer), format.c_str(), &t);
+  strftime(buffer, sizeof(buffer), format.c_str(), t);
 
   return buffer;
 }
@@ -25,8 +21,8 @@ std::string formatTimePoint(const std::chrono::system_clock::time_point& timePoi
 int rand32()
 {
   return (rand() << 16) + rand();
-}
 
+}
 int rand32Between(int min, int max)
 {
   const auto range = max - min;
