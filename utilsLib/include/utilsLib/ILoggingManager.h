@@ -29,13 +29,15 @@ public:
 
   static void destroy()
   {
-    m_instance.reset(nullptr);
+    m_instance = createNullLoggingManager();
   }
 
   static const std::unique_ptr<ILoggingManager>& getLogger()
   {
     return m_instance;
   }
+
+  static std::unique_ptr<ILoggingManager> createNullLoggingManager();
 
   virtual LoggingSeverity getLogLevelMinimumSeverity() const = 0;
   virtual void setLogLevelMinimumSeverity(LoggingSeverity severity) = 0;

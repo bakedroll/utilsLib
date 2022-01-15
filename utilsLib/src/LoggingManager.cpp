@@ -1,4 +1,5 @@
 #include "utilsLib/LoggingManager.h"
+#include "utilsLib/NullLoggingManager.h"
 #include "utilsLib/Utils.h"
 
 #include <chrono>
@@ -93,6 +94,11 @@ LoggingManager::LoggingManager()
 {
 }
 
-std::unique_ptr<ILoggingManager> ILoggingManager::m_instance;
+std::unique_ptr<ILoggingManager> ILoggingManager::createNullLoggingManager()
+{
+  return std::unique_ptr<ILoggingManager>(new NullLoggingManager());
+}
+
+std::unique_ptr<ILoggingManager> ILoggingManager::m_instance = ILoggingManager::createNullLoggingManager();
 
 }
