@@ -53,7 +53,7 @@ struct EnableBitMaskOperators
 template<typename EnumType>
 bool bitmask_has(EnumType mask, EnumType value)
 {
-  return underlying<EnumType>(mask & value) > 0;
+  return (underlying<EnumType>(mask) & underlying<EnumType>(value)) > 0;
 }
 
 int rand32();
