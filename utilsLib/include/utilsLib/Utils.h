@@ -1,11 +1,11 @@
 #pragma once
 
 #include <utilsLib/ILoggingManager.h>
-#include <utilsLib/LoggingSeverity.h>
 
-#include <cassert>
 #include <type_traits>
 #include <chrono>
+#include <map>
+#include <cassert>
 
 #define assert_return(cond, ...) if (!(cond)) { assert(false); return __VA_ARGS__; }
 #define assert_continue(cond) if (!(cond)) { assert(false); continue; }
@@ -59,6 +59,14 @@ bool bitmask_has(EnumType mask, EnumType value)
 int rand32();
 int rand32Between(int min, int max);
 double randDouble32Between(double min, double max, double step);
+
+template <typename Key, typename Value>
+Value& insertIntoMap(std::map<Key, Value>& map, const Key& key, Value value)
+{
+  auto keyCopy = key;
+  map.emplace(std::make_pair(std::move(keyCopy), std::move(value)));
+  return map.at(key);
+}
 
 }
 
