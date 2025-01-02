@@ -34,7 +34,7 @@ std::string FileLoggingStrategy::getFilename() const
   return m_filename;
 }
 
-void FileLoggingStrategy::deliverMessage(LoggingSeverity severity, const std::string& message)
+void FileLoggingStrategy::deliverMessage(LoggingSeverity /*severity*/, const std::string& message)
 {
   if (m_stream.is_open())
   {
